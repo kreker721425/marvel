@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
 import java.util.UUID;
 
 @Data
@@ -12,6 +13,8 @@ import java.util.UUID;
 public class ComicBookDto {
     private UUID id;
     private String name;
+    private String writer;
+    private Date published;
     private String description;
     private String image;
 }

@@ -9,9 +9,10 @@ import java.util.UUID;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class CharacterDto {
+public class CharacterDto  {
     private UUID id;
-    private String name;
+    private String heroName;
+    private String humanName;
     private String description;
     private String image;
 }

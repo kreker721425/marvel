@@ -2,23 +2,30 @@ package com.github.kreker721425.marvel.entity;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.Id;
 
-import javax.persistence.FetchType;
-import javax.persistence.ManyToMany;
+import javax.persistence.*;
 import java.util.Collection;
+import java.util.Date;
 import java.util.UUID;
 
 @Data
 @NoArgsConstructor
+@Entity
+@Table(name = "comic_book")
 public class ComicBookEntity {
 
     @Id
     private UUID id;
+
     private String name;
+    private String writer;
+    private Date published;
     private String description;
     private String image;
 
-    @ManyToMany(mappedBy = "character_entity",fetch = FetchType.LAZY)
+    @ManyToMany
+    @JoinTable(name = "character_comic_book",
+            joinColumns = @JoinColumn(name = "id_comic_book"),
+            inverseJoinColumns = @JoinColumn(name = "id_character"))
     private Collection<CharacterEntity> characters;
 }
