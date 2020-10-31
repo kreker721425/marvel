@@ -15,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
+import java.util.Date;
 import java.util.UUID;
 
 @Service
@@ -30,6 +31,36 @@ public class ComicBookServiceImpl implements ComicBookService {
     @Override
     public Collection<ComicBookDto> findAll() {
         return comicBookMapper.toComicsDto(comicBookRepository.findAll());
+    }
+
+    @Override
+    public Collection<ComicBookDto> findByName(String name) {
+        return comicBookMapper.toComicsDto(comicBookRepository.findByName(name));
+    }
+
+    @Override
+    public Collection<ComicBookDto> findByWriter(String writer) {
+        return comicBookMapper.toComicsDto(comicBookRepository.findByWriter(writer));
+    }
+
+    @Override
+    public Collection<ComicBookDto> findByPublished(Date published) {
+        return comicBookMapper.toComicsDto(comicBookRepository.findByPublished(published));
+    }
+
+    @Override
+    public Collection<ComicBookDto> sortByName() {
+        return comicBookMapper.toComicsDto(comicBookRepository.sortByName());
+    }
+
+    @Override
+    public Collection<ComicBookDto> sortByWriter() {
+        return comicBookMapper.toComicsDto(comicBookRepository.sortByWriter());
+    }
+
+    @Override
+    public Collection<ComicBookDto> sortByPublished() {
+        return comicBookMapper.toComicsDto(comicBookRepository.sortByPublished());
     }
 
     @Override
@@ -76,6 +107,21 @@ public class ComicBookServiceImpl implements ComicBookService {
         collection.add(character);
         comicBook.setCharacters(collection);
         comicBookRepository.save(comicBook);
+    }
+
+    @Override
+    public void deleteCharacterForComicBook(UUID characterId, UUID comicBookId) {
+        ComicBookEntity comicBook = comicBookRepository.findById(comicBookId).orElseThrow(ComicBookNotFoundException::new);
+        Collection<CharacterEntity> collection = characterRepository.findCharacterEntitiesByComics(
+                comicBookRepository.findById(comicBookId).orElseThrow(ComicBookNotFoundException::new)
+        );
+        CharacterEntity character = characterRepository.findById(characterId).orElseThrow(CharacterNotFoundException::new);
+
+        if (collection.stream().anyMatch((c) -> c == character)) {
+            collection.remove(character);
+            comicBook.setCharacters(collection);
+            comicBookRepository.save(comicBook);
+        }
     }
 
 }

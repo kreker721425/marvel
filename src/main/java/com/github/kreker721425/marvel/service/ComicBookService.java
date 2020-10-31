@@ -4,11 +4,24 @@ import com.github.kreker721425.marvel.dto.CharacterDto;
 import com.github.kreker721425.marvel.dto.ComicBookDto;
 
 import java.util.Collection;
+import java.util.Date;
 import java.util.UUID;
 
 public interface ComicBookService {
 
     Collection<ComicBookDto> findAll();
+
+    Collection<ComicBookDto> findByName(String name);
+
+    Collection<ComicBookDto> findByWriter(String writer);
+
+    Collection<ComicBookDto> findByPublished(Date published);
+
+    Collection<ComicBookDto> sortByName();
+
+    Collection<ComicBookDto> sortByWriter();
+
+    Collection<ComicBookDto> sortByPublished();
 
     void save(ComicBookDto comicBook);
 
@@ -21,4 +34,6 @@ public interface ComicBookService {
     void update(ComicBookDto comicBookDto, UUID id);
 
     void addCharacterForComicBook(UUID characterId, UUID comicBookId);
+
+    void deleteCharacterForComicBook(UUID characterId, UUID comicBookId);
 }

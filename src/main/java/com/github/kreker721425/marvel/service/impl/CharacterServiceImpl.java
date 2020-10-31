@@ -33,8 +33,23 @@ public class CharacterServiceImpl implements CharacterService {
     }
 
     @Override
-    public Collection<CharacterDto> findByName(String name){
-        return characterMapper.toCharacterDto(characterRepository.findByName(name));
+    public Collection<CharacterDto> findByHeroName(String heroName) {
+        return characterMapper.toCharacterDto(characterRepository.findByHeroName(heroName));
+    }
+
+    @Override
+    public Collection<CharacterDto> findByHumanName(String humanName) {
+        return characterMapper.toCharacterDto(characterRepository.findByHumanName(humanName));
+    }
+
+    @Override
+    public Collection<CharacterDto> sortByHeroName() {
+        return characterMapper.toCharacterDto(characterRepository.sortByHeroName());
+    }
+
+    @Override
+    public Collection<CharacterDto> sortByHumanName() {
+        return characterMapper.toCharacterDto(characterRepository.sortByHumanName());
     }
 
     @Override

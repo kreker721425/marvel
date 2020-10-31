@@ -10,7 +10,13 @@ public interface CharacterService {
 
     Collection<CharacterDto> findAll();
 
-    Collection<CharacterDto> findByName(String name);
+    Collection<CharacterDto> findByHeroName(String heroName);
+
+    Collection<CharacterDto> findByHumanName(String humanName);
+
+    Collection<CharacterDto> sortByHeroName();
+
+    Collection<CharacterDto> sortByHumanName();
 
     void save(CharacterDto characterDto);
 
