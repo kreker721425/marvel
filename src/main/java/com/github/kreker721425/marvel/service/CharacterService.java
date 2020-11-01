@@ -2,6 +2,7 @@ package com.github.kreker721425.marvel.service;
 
 import com.github.kreker721425.marvel.dto.CharacterDto;
 import com.github.kreker721425.marvel.dto.ComicBookDto;
+import com.github.kreker721425.marvel.entity.CharacterEntity;
 
 import java.util.Collection;
 import java.util.UUID;
@@ -13,6 +14,8 @@ public interface CharacterService {
     Collection<CharacterDto> findByHeroName(String heroName);
 
     Collection<CharacterDto> findByHumanName(String humanName);
+
+    Collection<CharacterEntity> findByHeroNameAndHumanName(String heroName, String humanName);
 
     Collection<CharacterDto> sortByHeroName();
 

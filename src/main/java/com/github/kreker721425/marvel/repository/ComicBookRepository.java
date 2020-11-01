@@ -20,6 +20,14 @@ public interface ComicBookRepository extends JpaRepository<ComicBookEntity, UUID
 
     Collection<ComicBookEntity> findByPublished(Date published);
 
+    Collection<ComicBookEntity> findByNameAndWriter(String name, String writer);
+
+    Collection<ComicBookEntity> findByNameAndPublished(String name, Date published);
+
+    Collection<ComicBookEntity> findByWriterAndPublished(String writer, Date published);
+
+    Collection<ComicBookEntity> findByNameAndWriterAndPublished(String name, String writer, Date published);
+
     @Query(value = "select * from comic_book order by name", nativeQuery = true)
     Collection<ComicBookEntity> sortByName();
 

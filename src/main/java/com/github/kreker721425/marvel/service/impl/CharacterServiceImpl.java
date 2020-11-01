@@ -43,6 +43,11 @@ public class CharacterServiceImpl implements CharacterService {
     }
 
     @Override
+    public Collection<CharacterEntity> findByHeroNameAndHumanName(String heroName, String humanName) {
+        return characterRepository.findByHeroNameAndHumanName(heroName, humanName);
+    }
+
+    @Override
     public Collection<CharacterDto> sortByHeroName() {
         return characterMapper.toCharacterDto(characterRepository.sortByHeroName());
     }

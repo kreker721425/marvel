@@ -16,6 +16,8 @@ public interface CharacterRepository extends JpaRepository<CharacterEntity, UUID
 
     Collection<CharacterEntity> findByHumanName(String humanName);
 
+    Collection<CharacterEntity> findByHeroNameAndHumanName(String heroName, String humanName);
+
     @Query(value = "select * from character order by hero_name", nativeQuery = true)
     Collection<CharacterEntity> sortByHeroName();
 
