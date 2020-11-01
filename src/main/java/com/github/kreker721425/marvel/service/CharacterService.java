@@ -18,7 +18,7 @@ public interface CharacterService {
 
     Collection<CharacterDto> sortByHumanName();
 
-    void save(CharacterDto characterDto);
+    CharacterDto save(CharacterDto characterDto);
 
     void delete(CharacterDto characterDto);
 

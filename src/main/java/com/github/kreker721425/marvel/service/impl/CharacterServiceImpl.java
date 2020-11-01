@@ -53,10 +53,10 @@ public class CharacterServiceImpl implements CharacterService {
     }
 
     @Override
-    public void save(CharacterDto character) {
+    public CharacterDto save(CharacterDto character) {
         if (character.getId() == null)
             character.setId(UUID.randomUUID());
-        characterRepository.save(characterMapper.toCharacterEntity(character));
+        return characterMapper.toCharacterDto(characterRepository.save(characterMapper.toCharacterEntity(character)));
     }
 
     @Override

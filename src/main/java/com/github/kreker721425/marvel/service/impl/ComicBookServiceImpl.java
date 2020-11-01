@@ -64,10 +64,10 @@ public class ComicBookServiceImpl implements ComicBookService {
     }
 
     @Override
-    public void save(ComicBookDto comicBook) {
+    public ComicBookDto save(ComicBookDto comicBook) {
         if (comicBook.getId() == null)
             comicBook.setId(UUID.randomUUID());
-        comicBookRepository.save(comicBookMapper.toComicBookEntity(comicBook));
+        return comicBookMapper.toComicBookDto(comicBookRepository.save(comicBookMapper.toComicBookEntity(comicBook)));
     }
 
     @Override

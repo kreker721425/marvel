@@ -23,7 +23,7 @@ public interface ComicBookService {
 
     Collection<ComicBookDto> sortByPublished();
 
-    void save(ComicBookDto comicBook);
+    ComicBookDto save(ComicBookDto comicBook);
 
     void delete(ComicBookDto comicBook);
 
