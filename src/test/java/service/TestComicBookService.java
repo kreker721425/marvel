@@ -17,10 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDate;
-import java.util.Collections;
-import java.util.Date;
-import java.util.Random;
-import java.util.UUID;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.*;
@@ -72,6 +69,34 @@ public class TestComicBookService {
                 .thenReturn(Collections.emptyList());
         assertEquals(Collections.emptyList(), comicBookService.findByPublished(new Date(0,0,0)));
     }
+
+    @Test
+    public void findByNameAndWriter() {
+        when(comicBookRepository.findByNameAndWriter(anyString(), anyString()))
+                .thenReturn(Collections.emptyList());
+        assertEquals(Collections.emptyList(), comicBookService.findByNameAndWriter("name", "writer"));
+    }
+
+    @Test
+    public void findByNameAndPublished() {
+        when(comicBookRepository.findByNameAndPublished(anyString(), any(Date.class)))
+                .thenReturn(Collections.emptyList());
+        assertEquals(Collections.emptyList(), comicBookService.
+                findByNameAndPublished("name", new Date(0,0,0)));    }
+
+    @Test
+    public void findByWriterAndPublished() {
+        when(comicBookRepository.findByWriterAndPublished(anyString(), any(Date.class)))
+                .thenReturn(Collections.emptyList());
+        assertEquals(Collections.emptyList(), comicBookService.
+                findByWriterAndPublished("writer", new Date(0,0,0)));    }
+
+    @Test
+    public void findByNameAndWriterAndPublished() {
+        when(comicBookRepository.findByNameAndWriterAndPublished(anyString(), anyString(), any(Date.class)))
+                .thenReturn(Collections.emptyList());
+        assertEquals(Collections.emptyList(), comicBookService.
+                findByNameAndWriterAndPublished("name", "writer", new Date(0,0,0)));    }
 
     @Test
     public void sortByNameTest() {
