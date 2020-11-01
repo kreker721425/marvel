@@ -64,39 +64,11 @@ public class TestComicBookService {
     }
 
     @Test
-    public void findByPublishedTest() {
-        when(comicBookRepository.findByPublished(any(Date.class)))
-                .thenReturn(Collections.emptyList());
-        assertEquals(Collections.emptyList(), comicBookService.findByPublished(new Date(0,0,0)));
-    }
-
-    @Test
     public void findByNameAndWriter() {
         when(comicBookRepository.findByNameAndWriter(anyString(), anyString()))
                 .thenReturn(Collections.emptyList());
         assertEquals(Collections.emptyList(), comicBookService.findByNameAndWriter("name", "writer"));
     }
-
-    @Test
-    public void findByNameAndPublished() {
-        when(comicBookRepository.findByNameAndPublished(anyString(), any(Date.class)))
-                .thenReturn(Collections.emptyList());
-        assertEquals(Collections.emptyList(), comicBookService.
-                findByNameAndPublished("name", new Date(0,0,0)));    }
-
-    @Test
-    public void findByWriterAndPublished() {
-        when(comicBookRepository.findByWriterAndPublished(anyString(), any(Date.class)))
-                .thenReturn(Collections.emptyList());
-        assertEquals(Collections.emptyList(), comicBookService.
-                findByWriterAndPublished("writer", new Date(0,0,0)));    }
-
-    @Test
-    public void findByNameAndWriterAndPublished() {
-        when(comicBookRepository.findByNameAndWriterAndPublished(anyString(), anyString(), any(Date.class)))
-                .thenReturn(Collections.emptyList());
-        assertEquals(Collections.emptyList(), comicBookService.
-                findByNameAndWriterAndPublished("name", "writer", new Date(0,0,0)));    }
 
     @Test
     public void sortByNameTest() {

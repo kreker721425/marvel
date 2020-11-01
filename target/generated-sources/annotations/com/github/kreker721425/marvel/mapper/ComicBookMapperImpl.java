@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2020-11-01T00:46:30+0300",
+    date = "2020-11-01T18:01:04+0300",
     comments = "version: 1.4.1.Final, compiler: javac, environment: Java 11.0.6 (JetBrains s.r.o)"
 )
 @Component
@@ -26,7 +26,6 @@ public class ComicBookMapperImpl implements ComicBookMapper {
         comicBookDto.setId( comicBookEntity.getId() );
         comicBookDto.setName( comicBookEntity.getName() );
         comicBookDto.setWriter( comicBookEntity.getWriter() );
-        comicBookDto.setPublished( comicBookEntity.getPublished() );
         comicBookDto.setDescription( comicBookEntity.getDescription() );
         comicBookDto.setImage( comicBookEntity.getImage() );
 
@@ -58,7 +57,6 @@ public class ComicBookMapperImpl implements ComicBookMapper {
         comicBookEntity.setId( comicsDto.getId() );
         comicBookEntity.setName( comicsDto.getName() );
         comicBookEntity.setWriter( comicsDto.getWriter() );
-        comicBookEntity.setPublished( comicsDto.getPublished() );
         comicBookEntity.setDescription( comicsDto.getDescription() );
         comicBookEntity.setImage( comicsDto.getImage() );
 
