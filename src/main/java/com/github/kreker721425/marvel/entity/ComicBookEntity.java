@@ -19,7 +19,6 @@ public class ComicBookEntity {
 
     private String name;
     private String writer;
-    private Date published;
     private String description;
     private String image;
 

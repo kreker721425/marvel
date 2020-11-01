@@ -44,28 +44,8 @@ public class ComicBookServiceImpl implements ComicBookService {
     }
 
     @Override
-    public Collection<ComicBookDto> findByPublished(Date published) {
-        return comicBookMapper.toComicsDto(comicBookRepository.findByPublished(published));
-    }
-
-    @Override
     public Collection<ComicBookDto> findByNameAndWriter(String name, String writer) {
         return comicBookMapper.toComicsDto(comicBookRepository.findByNameAndWriter(name, writer));
-    }
-
-    @Override
-    public Collection<ComicBookDto> findByNameAndPublished(String name, Date published) {
-        return comicBookMapper.toComicsDto(comicBookRepository.findByNameAndPublished(name, published));
-    }
-
-    @Override
-    public Collection<ComicBookDto> findByWriterAndPublished(String writer, Date published) {
-        return comicBookMapper.toComicsDto(comicBookRepository.findByWriterAndPublished(writer, published));
-    }
-
-    @Override
-    public Collection<ComicBookDto> findByNameAndWriterAndPublished(String name, String writer, Date published) {
-        return comicBookMapper.toComicsDto(comicBookRepository.findByNameAndWriterAndPublished(name, writer, published));
     }
 
     @Override

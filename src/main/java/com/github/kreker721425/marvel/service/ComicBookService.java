@@ -16,15 +16,7 @@ public interface ComicBookService {
 
     Collection<ComicBookDto> findByWriter(String writer);
 
-    Collection<ComicBookDto> findByPublished(Date published);
-
     Collection<ComicBookDto> findByNameAndWriter(String name, String writer);
-
-    Collection<ComicBookDto> findByNameAndPublished(String name, Date published);
-
-    Collection<ComicBookDto> findByWriterAndPublished(String writer, Date published);
-
-    Collection<ComicBookDto> findByNameAndWriterAndPublished(String name, String writer, Date published);
 
     Collection<ComicBookDto> sortByName();
 
