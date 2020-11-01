@@ -15,7 +15,7 @@ public interface CharacterService {
 
     Collection<CharacterDto> findByHumanName(String humanName);
 
-    Collection<CharacterEntity> findByHeroNameAndHumanName(String heroName, String humanName);
+    Collection<CharacterDto> findByHeroNameAndHumanName(String heroName, String humanName);
 
     Collection<CharacterDto> sortByHeroName();
 
