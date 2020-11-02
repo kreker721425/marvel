@@ -5,10 +5,12 @@ import com.github.kreker721425.marvel.dto.ComicBookDto;
 import com.github.kreker721425.marvel.exception.CharacterNotFoundException;
 import com.github.kreker721425.marvel.service.CharacterService;
 import com.github.kreker721425.marvel.service.ComicBookService;
+import com.github.kreker721425.marvel.service.FileService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Collection;
 import java.util.UUID;
@@ -20,6 +22,7 @@ public class ComicBookRestController {
 
     private final CharacterService characterService;
     private final ComicBookService comicBookService;
+    private final FileService fileService;
 
     @GetMapping
     public ResponseEntity<Collection<ComicBookDto>> getAll()
@@ -59,7 +62,8 @@ public class ComicBookRestController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<ComicBookDto> add(@RequestBody ComicBookDto comicBookDto) {
+    public ResponseEntity<ComicBookDto> add(@RequestBody ComicBookDto comicBookDto, @RequestParam MultipartFile file) {
+        comicBookDto.setImage(fileService.uploadFile(file));
         comicBookService.save(comicBookDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(comicBookDto);
     }
@@ -75,7 +79,11 @@ public class ComicBookRestController {
     }
 
     @PutMapping("/{comicBookId}/update")
-    public ResponseEntity<ComicBookDto> update(@PathVariable UUID comicBookId, @RequestBody ComicBookDto comicBookDto) {
+    public ResponseEntity<ComicBookDto> update(@PathVariable UUID comicBookId,
+                                               @RequestBody ComicBookDto comicBookDto,
+                                               @RequestParam MultipartFile file
+    ) {
+        comicBookDto.setImage(fileService.uploadFile(file));
         comicBookService.update(comicBookDto,comicBookId);
 
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(comicBookDto);

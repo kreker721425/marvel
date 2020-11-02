@@ -8,7 +8,5 @@ import java.io.IOException;
 
 public interface FileService {
 
-    UploadResponseDto uploadFile(MultipartFile file);
-
-    UploadInfo get(String id);
+    String uploadFile(MultipartFile file);
 }

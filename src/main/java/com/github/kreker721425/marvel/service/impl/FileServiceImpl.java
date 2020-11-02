@@ -24,7 +24,7 @@ public class FileServiceImpl implements FileService {
 
 
     @Override
-    public UploadResponseDto uploadFile(MultipartFile file) {
+    public String uploadFile(MultipartFile file) {
         if (file == null || file.isEmpty()) {
             throw new FileIsEmptyException();
         }
@@ -36,21 +36,9 @@ public class FileServiceImpl implements FileService {
 
         try {
             file.transferTo(Paths.get(uploadPath).resolve(fileName));
-            return new UploadResponseDto(fileName);
+            return fileName;
         } catch (IOException e) {
             throw new FileStorageException();
-        }
-    }
-
-    @Override
-    public UploadInfo get(String id) {
-        try {
-            return new UploadInfo(
-                    new FileSystemResource(Paths.get(uploadPath).resolve(id)),
-                    Files.probeContentType(Paths.get(uploadPath).resolve(id))
-            );
-        } catch (IOException e) {
-            throw new FileStorageException(e);
         }
     }
 }
