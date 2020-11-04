@@ -5,6 +5,7 @@ import com.github.kreker721425.marvel.exception.CharacterNotFoundException;
 import com.github.kreker721425.marvel.exception.ComicBookNotFoundException;
 import com.github.kreker721425.marvel.exception.FileIsEmptyException;
 import com.github.kreker721425.marvel.exception.FileStorageException;
+import com.github.kreker721425.marvel.utils.ErrorConstants;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.web.servlet.error.AbstractErrorController;
 import org.springframework.boot.web.servlet.error.ErrorAttributes;
@@ -32,47 +33,32 @@ public class ErrorRestController extends AbstractErrorController {
     public ResponseEntity<ErrorDto> error(HttpServletRequest request) {
         ServletWebRequest webRequest = new ServletWebRequest(request);
         Throwable error = errorAttributes.getError(webRequest);
-        int status = getStatus(request).value();
-        String message = "error.unknown";
+        ErrorDto errorDto = new ErrorDto(getStatus(request).value(), "error.unknown");
         if (error == null) {
-            return ResponseEntity.status(status).body(
-                    new ErrorDto(status, message)
-            );
+            return ResponseEntity.status(errorDto.getStatus()).body(errorDto);
         }
         if (error instanceof CharacterNotFoundException) {
-            status = 404;
-            message = "error.character.not_found";
-            return getErrorDto(error, status, message);
+            return getErrorDto(error, ErrorConstants.ERROR_CHARACTER_NOT_FOUND);
         }
         if (error instanceof ComicBookNotFoundException) {
-            status = 404;
-            message = "error.comics.not_found";
-            return getErrorDto(error, status, message);
+            return getErrorDto(error, ErrorConstants.ERROR_COMIC_BOOK_NOT_FOUND);
         }
         if (error instanceof FileNotFoundException) {
-            status = 404;
-            message = "error.file.not_found";
-            return getErrorDto(error, status, message);
+            return getErrorDto(error, ErrorConstants.ERROR_FILE_NOT_FOUND);
         }
         if (error instanceof FileStorageException) {
-            status = 400;
-            message = "error.file.can_not_save";
-            return getErrorDto(error, status, message);
+            return getErrorDto(error, ErrorConstants.ERROR_FILE_CAN_NOT_SAVE);
         }
         if (error instanceof FileIsEmptyException) {
-            status = 404;
-            message = "error.file.is_empty";
-            return getErrorDto(error, status, message);
+            return getErrorDto(error, ErrorConstants.ERROR_FILE_IS_EMPTY);
         }
 
-        return getErrorDto(error, status, message);
+        return getErrorDto(error, errorDto);
     }
 
-    private ResponseEntity<ErrorDto> getErrorDto(Throwable error, int status, String message) {
+    private ResponseEntity<ErrorDto> getErrorDto(Throwable error, ErrorDto errorDto) {
         error.printStackTrace();
-        return ResponseEntity.status(status).body(
-                new ErrorDto(status, message)
-        );
+        return ResponseEntity.status(errorDto.getStatus()).body(errorDto);
     }
 
     @Override

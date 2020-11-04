@@ -2,14 +2,12 @@ package com.github.kreker721425.marvel.rest;
 
 import com.github.kreker721425.marvel.dto.CharacterDto;
 import com.github.kreker721425.marvel.dto.ComicBookDto;
-import com.github.kreker721425.marvel.exception.CharacterNotFoundException;
 import com.github.kreker721425.marvel.service.CharacterService;
 import com.github.kreker721425.marvel.service.ComicBookService;
 import com.github.kreker721425.marvel.service.FileService;
-import jdk.internal.joptsimple.internal.Strings;
+import com.google.common.base.Strings;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -26,92 +24,88 @@ public class CharacterRestController {
     private final FileService fileService;
 
     @GetMapping
-    public ResponseEntity<Collection<CharacterDto>> getAll()
+    public Collection<CharacterDto> getAll()
     {
-        return ResponseEntity.ok(characterService.findAll());
+        return characterService.findAll();
     }
 
 
     @GetMapping(value = "/filer", params = {"heroName", "humanName"})
-    public ResponseEntity<Collection<CharacterDto>> searchByNameAndDescription(
+    public Collection<CharacterDto> searchByNameAndDescription(
             @RequestParam String heroName,
             @RequestParam String humanName
     ) {
 
         if (!Strings.isNullOrEmpty(heroName)){
             if (!Strings.isNullOrEmpty(humanName)){
-                return ResponseEntity.ok(characterService.findByHeroNameAndHumanName(heroName, humanName));
+                return characterService.findByHeroNameAndHumanName(heroName, humanName);
             }
-            return ResponseEntity.ok(characterService.findByHeroName(heroName));
+            return characterService.findByHeroName(heroName);
         }
         if (!Strings.isNullOrEmpty(humanName)){
-            return ResponseEntity.ok(characterService.findByHumanName(humanName));
+            return characterService.findByHumanName(humanName);
         }
-        return ResponseEntity.ok(characterService.findAll());
+        return characterService.findAll();
     }
 
-    @GetMapping(value = "/sort", params = "f")
-    public ResponseEntity<Collection<CharacterDto>> getSortedByName(@RequestParam String sort) {
+    @GetMapping(value = "/sort", params = "sort")
+    public Collection<CharacterDto> getSortedByName(@RequestParam String sort) {
         if (sort.equals("heroName")) {
-            return ResponseEntity.ok(characterService.sortByHeroName());
+            return characterService.sortByHeroName();
         }
         if (sort.equals("humanName")) {
-            return ResponseEntity.ok(characterService.sortByHumanName());
+            return characterService.sortByHumanName();
         }
-        return ResponseEntity.ok(characterService.findAll());
+        return characterService.findAll();
     }
 
     @PostMapping("/add")
-    public ResponseEntity<CharacterDto> add(@RequestBody CharacterDto characterDto, @RequestParam MultipartFile file) {
+    @ResponseStatus(HttpStatus.CREATED)
+    public CharacterDto add(@RequestBody CharacterDto characterDto, @RequestParam MultipartFile file) {
         characterDto.setImage(fileService.uploadFile(file));
-        characterService.save(characterDto);
-        return ResponseEntity.status(HttpStatus.CREATED).body(characterDto);
+        return characterService.save(characterDto);
     }
 
     @GetMapping("/{characterId}")
-    public ResponseEntity<CharacterDto> showCharacter(@PathVariable UUID characterId) {
-        try{
-            return ResponseEntity.ok(characterService.findById(characterId));
-        }
-        catch (CharacterNotFoundException e) {
-            return ResponseEntity.notFound().build();
-        }
+    public CharacterDto showCharacter(@PathVariable String characterId) {
+        return characterService.findById(UUID.fromString(characterId));
     }
 
     @PutMapping("/{characterId}/update")
-    public ResponseEntity<CharacterDto> update(@PathVariable UUID characterId,
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public CharacterDto update(@PathVariable String characterId,
                                                @RequestBody CharacterDto characterDto,
                                                @RequestParam MultipartFile file
     ) {
         characterDto.setImage(fileService.uploadFile(file));
-        characterService.update(characterDto,characterId);
-
-        return ResponseEntity.status(HttpStatus.ACCEPTED).body(characterDto);
+        return characterService.update(characterDto,UUID.fromString(characterId));
     }
 
     @DeleteMapping("/{characterId}")
-    public void delete(@PathVariable UUID characterId) {
-        characterService.delete(characterService.findById(characterId));
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void delete(@PathVariable String characterId) {
+        characterService.delete(characterService.findById(UUID.fromString(characterId)));
     }
 
     @GetMapping("/{characterId}/comics")
-    public ResponseEntity<Collection<ComicBookDto>> showComics (@PathVariable UUID characterId) {
-        return ResponseEntity.ok(comicBookService.findComicsByCharacter(characterService.findById(characterId)));
+    public Collection<ComicBookDto> showComics (@PathVariable String characterId) {
+        return comicBookService.findComicsByCharacter(characterService.findById(UUID.fromString(characterId)));
     }
 
     @PostMapping("/{characterId}/comics/add")
-    public ResponseEntity<Collection<ComicBookDto>> addComicBook(
-            @PathVariable UUID characterId,
+    public Collection<ComicBookDto> addComicBook(
+            @PathVariable String characterId,
             @RequestBody Collection<ComicBookDto> comicBookDtoCollection
     ) {
         for (ComicBookDto comicBookDto: comicBookDtoCollection)
-            characterService.addComicBookForCharacter(characterId, comicBookDto.getId());
-        return ResponseEntity.status(HttpStatus.CREATED).body(comicBookDtoCollection);
+            characterService.addComicBookForCharacter(UUID.fromString(characterId), comicBookDto.getId());
+        return comicBookDtoCollection;
     }
 
     @DeleteMapping("/{characterId}/comics/{comicBookId}")
-    public void deleteComicBook(@PathVariable UUID characterId, @PathVariable UUID comicBookId) {
-        characterService.deleteComicBookForCharacter(characterId, comicBookId);
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteComicBook(@PathVariable String characterId, @PathVariable String comicBookId) {
+        characterService.deleteComicBookForCharacter(UUID.fromString(characterId), UUID.fromString(comicBookId));
     }
 
 }

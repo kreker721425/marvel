@@ -80,10 +80,10 @@ public class CharacterServiceImpl implements CharacterService {
     }
 
     @Override
-    public void update(CharacterDto characterDto, UUID id) {
+    public CharacterDto update(CharacterDto characterDto, UUID id) {
         CharacterEntity characterEntity = characterMapper.toCharacterEntity(characterDto);
         characterEntity.setId(id);
-        characterRepository.save(characterEntity);
+        return characterMapper.toCharacterDto(characterRepository.save(characterEntity));
     }
 
     @Override

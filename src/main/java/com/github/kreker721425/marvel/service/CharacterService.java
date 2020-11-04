@@ -29,7 +29,7 @@ public interface CharacterService {
 
     CharacterDto findById(UUID id);
 
-    void update(CharacterDto characterDto, UUID id);
+    CharacterDto update(CharacterDto characterDto, UUID id);
 
     void addComicBookForCharacter(UUID characterId, UUID comicBookId);
 

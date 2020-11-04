@@ -32,7 +32,7 @@ public interface ComicBookService {
 
     ComicBookDto findById(UUID id);
 
-    void update(ComicBookDto comicBookDto, UUID id);
+    ComicBookDto update(ComicBookDto comicBookDto, UUID id);
 
     void addCharacterForComicBook(UUID characterId, UUID comicBookId);
 

@@ -86,10 +86,10 @@ public class ComicBookServiceImpl implements ComicBookService {
     }
 
     @Override
-    public void update(ComicBookDto comicBookDto, UUID id) {
+    public ComicBookDto update(ComicBookDto comicBookDto, UUID id) {
         ComicBookEntity comicBookEntity = comicBookMapper.toComicBookEntity(comicBookDto);
         comicBookEntity.setId(id);
-        comicBookRepository.save(comicBookEntity);
+        return comicBookMapper.toComicBookDto(comicBookRepository.save(comicBookEntity));
     }
 
 
