@@ -38,19 +38,19 @@ public class ErrorRestController extends AbstractErrorController {
             return ResponseEntity.status(errorDto.getStatus()).body(errorDto);
         }
         if (error instanceof CharacterNotFoundException) {
-            return getErrorDto(error, ErrorConstants.ERROR_CHARACTER_NOT_FOUND);
+            return getErrorDto(error, new ErrorDto(404, "error.character.not_found"));
         }
         if (error instanceof ComicBookNotFoundException) {
-            return getErrorDto(error, ErrorConstants.ERROR_COMIC_BOOK_NOT_FOUND);
+            return getErrorDto(error, new ErrorDto(404, "error.comic_book.not_found"));
         }
         if (error instanceof FileNotFoundException) {
-            return getErrorDto(error, ErrorConstants.ERROR_FILE_NOT_FOUND);
+            return getErrorDto(error, new ErrorDto(404, "error.file.not_found"));
         }
         if (error instanceof FileStorageException) {
-            return getErrorDto(error, ErrorConstants.ERROR_FILE_CAN_NOT_SAVE);
+            return getErrorDto(error, new ErrorDto(400, "error.file.can_not_save"));
         }
         if (error instanceof FileIsEmptyException) {
-            return getErrorDto(error, ErrorConstants.ERROR_FILE_IS_EMPTY);
+            return getErrorDto(error, new ErrorDto(404, "error.file.is_empty"));
         }
 
         return getErrorDto(error, errorDto);
