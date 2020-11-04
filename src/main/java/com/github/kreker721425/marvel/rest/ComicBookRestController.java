@@ -6,6 +6,7 @@ import com.github.kreker721425.marvel.exception.CharacterNotFoundException;
 import com.github.kreker721425.marvel.service.CharacterService;
 import com.github.kreker721425.marvel.service.ComicBookService;
 import com.github.kreker721425.marvel.service.FileService;
+import jdk.internal.joptsimple.internal.Strings;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -37,13 +38,13 @@ public class ComicBookRestController {
             @RequestParam String writer
     ) {
 
-        if (name != null && !name.isEmpty()){
-            if (writer != null && !writer.isEmpty()){
+        if (!Strings.isNullOrEmpty(name)){
+            if (!Strings.isNullOrEmpty(writer)){
                 return ResponseEntity.ok(comicBookService.findByNameAndWriter(name, writer));
             }
             return ResponseEntity.ok(comicBookService.findByName(name));
         }
-        if (writer != null && !writer.isEmpty()){
+        if (!Strings.isNullOrEmpty(writer)){
             return ResponseEntity.ok(comicBookService.findByWriter(writer));
         }
 
