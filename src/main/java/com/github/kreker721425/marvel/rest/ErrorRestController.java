@@ -5,7 +5,6 @@ import com.github.kreker721425.marvel.exception.CharacterNotFoundException;
 import com.github.kreker721425.marvel.exception.ComicBookNotFoundException;
 import com.github.kreker721425.marvel.exception.FileIsEmptyException;
 import com.github.kreker721425.marvel.exception.FileStorageException;
-import com.github.kreker721425.marvel.utils.ErrorConstants;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.web.servlet.error.AbstractErrorController;
 import org.springframework.boot.web.servlet.error.ErrorAttributes;
